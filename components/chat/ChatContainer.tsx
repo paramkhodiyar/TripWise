@@ -12,7 +12,7 @@ export function ChatContainer({ groupId, initialMessages = [], currentUserId, cu
 
   useEffect(() => {
     // connect to our custom socket server
-    const socket = io(window.location.origin);
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || window.location.origin);
     socketRef.current = socket;
 
     socket.emit("join_group", groupId);
