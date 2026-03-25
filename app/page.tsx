@@ -32,7 +32,7 @@ export default async function LandingPage() {
         <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl">
           Coordinate with friends in real-time while an AI acts as your dedicated Head Trip Planner to synthesize decisions, track budgets, and build structured itineraries.
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 mb-20">
           <Link href={session ? "/trips" : "/signup"} className="px-8 py-4 bg-slate-900 text-white rounded-full font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-all text-lg">
             Start Planning <ArrowRight size={20} />
@@ -54,7 +54,7 @@ export default async function LandingPage() {
             <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
               <Bot size={28} />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">AI Head Planner</h3>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">Saarthi</h3>
             <p className="text-slate-500">Say @ai and let the intelligent planner resolve conflicts and suggest structured itineraries.</p>
           </div>
           <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">

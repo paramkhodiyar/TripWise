@@ -64,7 +64,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
             >
               <Sparkles size={15} className="md:hidden" />
               <Sparkles size={20} className="hidden md:block" />
-              <span className="hidden md:inline">AI Helper</span>
+              <span className="hidden md:inline">Saarthi</span>
             </Link>
             <Link
               href="/profile"
