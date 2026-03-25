@@ -132,6 +132,7 @@ export function ChatContainer({ groupId, initialMessages = [], currentUserId, cu
             <Send size={18} />
           </button>
         </form>
+          <p className="text-xs text-gray-500 mt-2">*AI responses may be factually inaccurate.*</p>
       </div>
     </div>
   );
