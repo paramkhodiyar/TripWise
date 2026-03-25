@@ -57,10 +57,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ queued: true });
     }
 
-    // Process the queue asynchronously
-    processQueue(groupId).catch(console.error);
+    // Process the queue synchronously in serverless
+    await processQueue(groupId);
 
-    return NextResponse.json({ success: true, queued: true });
+    return NextResponse.json({ success: true, processed: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
