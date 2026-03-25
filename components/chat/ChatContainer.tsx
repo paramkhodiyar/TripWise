@@ -12,10 +12,19 @@ export function ChatContainer({ groupId, initialMessages = [], currentUserId, cu
 
   useEffect(() => {
     // connect to our custom socket server
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
-      transports: ["websocket"],
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL as string, {
+      transports: ["polling", "websocket"],
+      reconnectionAttempts: 5,
     });
     socketRef.current = socket;
+
+    socket.on("connect", () => {
+      console.log("🟢 Connected to Socket.IO server:", socket.id);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("🔴 Socket connection error:", err.message);
+    });
 
     socket.emit("join_group", groupId);
 

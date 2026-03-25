@@ -18,9 +18,12 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
   }, [initialTripState]);
 
   useEffect(() => {
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
-      transports: ["websocket"],
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL as string, {
+      transports: ["polling", "websocket"],
     });
+
+    socket.on("connect", () => console.log("🟢 Planner Socket Connected"));
+    socket.on("connect_error", (err) => console.error("🔴 Planner Socket Error:", err));
     socket.emit("join_group", groupId);
 
     socket.on("trip_state_updated", () => {

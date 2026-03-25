@@ -102,6 +102,7 @@ app.prepare().then(() => {
           data.type === "ai_prompt" ||
           data.content?.toLowerCase().includes("@ai")
         ) {
+          console.log(`🤖 Triggering AI for group ${data.groupId} via ${BASE_URL}...`);
           fetch(`${BASE_URL}/api/ai/process`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -109,12 +110,13 @@ app.prepare().then(() => {
           })
             .then(async (res) => {
               if (!res.ok) {
-                console.error("❌ AI Error:", await res.text());
+                const text = await res.text();
+                console.error(`❌ AI Error (${res.status}):`, text);
               } else {
-                console.log("🤖 AI triggered");
+                console.log("🤖 AI API responded successfully (queued)");
               }
             })
-            .catch(err => console.error("❌ AI fetch failed:", err));
+            .catch(err => console.error("❌ AI fetch failed completely:", err));
         }
 
       } catch (e) {
