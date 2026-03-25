@@ -18,7 +18,9 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
   }, [initialTripState]);
 
   useEffect(() => {
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || window.location.origin);
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
+      transports: ["websocket"],
+    });
     socket.emit("join_group", groupId);
 
     socket.on("trip_state_updated", () => {
@@ -52,7 +54,9 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
   const socketRef = useRef<any>(null);
 
   useEffect(() => {
-    socketRef.current = io(process.env.NEXT_PUBLIC_SOCKET_URL || window.location.origin);
+    socketRef.current = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
+      transports: ["websocket"],
+    });
     socketRef.current.emit("join_group", groupId);
     return () => socketRef.current.disconnect();
   }, [groupId]);

@@ -137,8 +137,8 @@ async function processQueue(groupId: string) {
       });
 
       // 3. Emit back via Socket.js (internal ping)
-      const port = process.env.PORT || 3000;
-      await fetch(`http://localhost:${port}/api/internal/emit`, {
+      const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || `http://localhost:3000`;
+      await fetch(`${socketUrl}/api/internal/emit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -156,7 +156,7 @@ async function processQueue(groupId: string) {
       });
 
       // Trigger state re-fetch ping
-      await fetch(`http://localhost:${port}/api/internal/emit`, {
+      await fetch(`${socketUrl}/api/internal/emit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ event: "trip_state_updated", groupId })
