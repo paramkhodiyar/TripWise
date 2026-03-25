@@ -42,7 +42,12 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
        router.refresh();
     });
 
+    const interval = setInterval(() => {
+       router.refresh();
+    }, 30000);
+
     return () => {
+      clearInterval(interval);
       socket.off("trip_state_updated");
       socket.off("connect");
       socket.disconnect();

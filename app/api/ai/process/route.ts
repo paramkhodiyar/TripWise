@@ -43,10 +43,10 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { groupId, senderId } = data;
 
-    // AI Rate Limiting (5 requests per min max)
+    // AI Rate Limiting (15 requests per min max)
     const userLimit = await redis.incr(`rate:ai:${senderId}`);
     if (userLimit === 1) await redis.expire(`rate:ai:${senderId}`, 60);
-    if (userLimit > 20) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+    if (userLimit > 15) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
 
     // Push prompt to Queue
     await redis.lpush(`queue:ai:${groupId}`, JSON.stringify(data));

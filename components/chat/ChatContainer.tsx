@@ -81,7 +81,6 @@ export function ChatContainer({ groupId, initialMessages = [], currentUserId, cu
     socketRef.current?.emit("typing_stop", { groupId, userId: currentUserId });
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
     
-    setMessages((prev) => [...prev, newMsg]);
     setInput("");
   };
 

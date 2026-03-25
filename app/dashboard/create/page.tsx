@@ -9,13 +9,15 @@ import { ChevronLeft, Globe, Lock, DollarSign, Users, CalendarDays, Plane } from
 
 export default function CreateGroupPage() {
   const [loading, setLoading] = useState(false);
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(true);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
+    // Explicitly set isPublic based on !isPrivate
+    formData.set("isPublic", String(!isPrivate));
     try {
       const res = await createGroup(formData);
       if (res.success) {
@@ -96,18 +98,18 @@ export default function CreateGroupPage() {
               {/* Toggle row */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isPublic ? "bg-blue-50 border border-blue-100" : "bg-slate-100 border border-slate-200"}`}>
-                    {isPublic
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${!isPrivate ? "bg-blue-50 border border-blue-100" : "bg-indigo-50 border border-indigo-100"}`}>
+                    {!isPrivate
                       ? <Globe size={15} className="text-blue-500" />
-                      : <Lock size={15} className="text-slate-400" />
+                      : <Lock size={15} className="text-indigo-500" />
                     }
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-800">{isPublic ? "Public Trip" : "Private Trip"}</p>
+                    <p className="text-sm font-semibold text-slate-800">{isPrivate ? "Private Trip" : "Public Trip"}</p>
                     <p className="text-xs text-slate-400 mt-0.5">
-                      {isPublic
-                        ? "Appears on Explore — anyone can join"
-                        : "Invite-only, not listed publicly"}
+                      {isPrivate
+                        ? "Invite-only, not listed publicly"
+                        : "Appears on Explore — anyone can join"}
                     </p>
                   </div>
                 </div>
@@ -116,19 +118,18 @@ export default function CreateGroupPage() {
                 <button
                   type="button"
                   role="switch"
-                  aria-checked={isPublic}
-                  onClick={() => setIsPublic(!isPublic)}
-                  className={`relative w-10 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 ${isPublic ? "bg-slate-900" : "bg-slate-200"}`}
+                  aria-checked={isPrivate}
+                  onClick={() => setIsPrivate(!isPrivate)}
+                  className={`relative w-10 h-6 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 ${isPrivate ? "bg-indigo-600" : "bg-slate-200"}`}
                 >
                   <span
-                    className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${isPublic ? "translate-x-4" : "translate-x-0"}`}
+                    className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${isPrivate ? "translate-x-4" : "translate-x-0"}`}
                   />
-                  <input type="checkbox" name="isPublic" value="true" checked={isPublic} onChange={() => { }} className="sr-only" />
                 </button>
               </div>
 
               {/* Public-only fields */}
-              {isPublic && (
+              {!isPrivate && (
                 <div className="mt-5 pt-5 border-t border-slate-100 space-y-4">
                   {/* Budget */}
                   <div>
