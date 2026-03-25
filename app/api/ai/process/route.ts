@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     // AI Rate Limiting (5 requests per min max)
     const userLimit = await redis.incr(`rate:ai:${senderId}`);
     if (userLimit === 1) await redis.expire(`rate:ai:${senderId}`, 60);
-    if (userLimit > 5) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+    if (userLimit > 20) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
 
     // Push prompt to Queue
     await redis.lpush(`queue:ai:${groupId}`, JSON.stringify(data));
@@ -108,7 +108,7 @@ async function processQueue(groupId: string) {
       if (parsed.tripStateUpdates) {
         const updates = parsed.tripStateUpdates;
         const validUpdates = Object.fromEntries(Object.entries(updates).filter(([_, v]) => v !== null));
-        
+
         if (Object.keys(validUpdates).length > 0) {
           if (group?.tripState) {
             await prisma.tripState.update({
@@ -130,11 +130,11 @@ async function processQueue(groupId: string) {
 
       // 2. Save AI message to DB
       const aiMessage = await prisma.message.create({
-         data: {
-           groupId,
-           content: parsed.message || "I updated the trip plan based on your request.",
-           type: "ai"
-         }
+        data: {
+          groupId,
+          content: parsed.message || "I updated the trip plan based on your request.",
+          type: "ai"
+        }
       });
 
       // 3. Emit back via Socket.js (internal ping)
