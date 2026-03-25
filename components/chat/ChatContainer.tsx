@@ -92,7 +92,7 @@ export function ChatContainer({ groupId, initialMessages = [], currentUserId, cu
             <div className={`p-3 rounded-xl max-w-[80%] shadow-sm text-[15px] ${msg.senderId === currentUserId ? "bg-slate-900 text-white" : "bg-white border border-slate-200 text-slate-800"}`}>
               {msg.type === "ai" ? (
                 <span className="font-semibold flex items-center gap-1 mb-1 text-xs uppercase tracking-wider">
-                  <Bot size={14} /> AI Planner
+                  <Bot size={14} /> Saarthi
                 </span>
               ) : msg.senderId !== currentUserId ? (
                 <span className="font-bold block mb-1 text-xs uppercase tracking-wider text-slate-400">

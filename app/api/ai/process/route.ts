@@ -5,7 +5,7 @@ import Groq from "groq-sdk";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const SYSTEM_PROMPT = `You are "TripWise AI". 
+const SYSTEM_PROMPT = `You are "Saarthi AI". 
 You structure chaotic group chats into a JSON trip itinerary. 
 You will receive the CURRENT TRIP STATE and RECENT CHAT MESSAGES. 
 You MUST respond EXCLUSIVELY with a JSON object. No markdown wrapping.
@@ -32,11 +32,22 @@ JSON Schema:
     "dates": "Dates string or null if unchanged",
     "budget": "Detailed budget breakdown with ₹ or null if unchanged",
     "preferences": ["tag1", "tag2"] or null,
+    "transport": {
+      "type": "flight | train | bus | null",
+      "details": "Flight provider name / Train name / Bus operator",
+      "avgPrice": "Avg price with ₹ (e.g. AC Berth for trains)"
+    } or null,
+    "accommodation": {
+      "hotelName": "Suggested Hotel Name",
+      "price": "Price per night with ₹"
+    } or null,
     "itinerary": [
       { "day": 1, "title": "Day title", "activities": ["act 1 (₹cost)", "act 2"] }
     ] or null
   }
-}`;
+}
+
+CRITICAL: In 'transport', only provide data if the user explicitly mentions a transport method or if it's clearly deduced. Do not provide all options. Keep it specific to their choice.`;
 
 export async function POST(req: Request) {
   try {

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 export default function ConsultantPage() {
   const [messages, setMessages] = useState<{role: string, content: string}[]>([
-    { role: "assistant", content: "Hello! I'm your Travel Consultant. Ready to plan your next adventure? Any place in mind or need a suggestion for a budget trip?" }
+    { role: "assistant", content: "Hello! I'm Saarthi, your Travel Consultant. Ready to plan your next adventure? Any place in mind or need a suggestion for a budget trip?" }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ export default function ConsultantPage() {
             <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shrink-0">
               <Sparkles size={14} className="sm:size-4" />
             </div>
-            <h1 className="font-bold text-slate-900 tracking-tight text-sm sm:text-base line-clamp-1">AI Consultant</h1>
+            <h1 className="font-bold text-slate-900 tracking-tight text-sm sm:text-base line-clamp-1">Saarthi Consultant</h1>
           </div>
         </div>
         <Link 
@@ -87,7 +87,7 @@ export default function ConsultantPage() {
                 {msg.role === "assistant" && (
                   <div className="flex items-center gap-2 mb-2 text-indigo-500">
                     <Bot size={14} />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Consultant</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">Saarthi</span>
                   </div>
                 )}
                 <p className="text-[15px] sm:text-base leading-relaxed whitespace-pre-wrap">{msg.content}</p>
@@ -127,11 +127,11 @@ export default function ConsultantPage() {
               disabled={loading || !input.trim()}
               className="p-3 sm:px-6 bg-slate-900 text-white rounded-xl sm:rounded-full hover:bg-slate-800 transition-all shadow-lg active:scale-95 disabled:opacity-50 flex items-center gap-2"
             >
-              <span className="hidden sm:inline font-bold">Ask AI</span>
+              <span className="hidden sm:inline font-bold">Ask Saarthi</span>
               <Send size={18} />
             </button>
           </form>
-          <p className="text-center text-[10px] sm:text-xs text-slate-400 mt-4 uppercase tracking-widest font-bold">TripWise AI Travel Expert • 24/7 Consultation</p>
+          <p className="text-center text-[10px] sm:text-xs text-slate-400 mt-4 uppercase tracking-widest font-bold">Saarthi AI Travel Expert • 24/7 Consultation</p>
         </div>
       </div>
       

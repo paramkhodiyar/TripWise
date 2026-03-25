@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { createNote, deleteNote } from "@/app/actions/note";
 import { addExpense, deleteExpense } from "@/app/actions/expenses";
-import { Trash2, Plus, Sparkles, Save, MapPin, Calendar, Wallet, Map, Receipt, ArrowRight } from "lucide-react";
+import { Trash2, Plus, Sparkles, Save, MapPin, Calendar, Wallet, Map, Receipt, ArrowRight, Plane, Building } from "lucide-react";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { useRouter } from "next/navigation";
@@ -189,7 +189,6 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
               </div>
             </div>
             
-            {/* Dates & Budget Grid */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                 <h3 className="flex items-center gap-2 text-xs font-bold text-emerald-500 uppercase tracking-widest mb-1">
@@ -205,6 +204,30 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
                 <p className="text-lg font-bold text-slate-900">{tripState.budget || "Discussing..."}</p>
               </div>
             </div>
+
+            {/* Transport & Accommodation Section */}
+            {(tripState.transport || tripState.accommodation) && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                {tripState.transport && (
+                  <div className="p-5 rounded-3xl bg-slate-50 border border-slate-200">
+                    <h3 className="flex items-center gap-2 text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-2">
+                       {tripState.transport.type === 'flight' ? <Plane size={14} /> : tripState.transport.type === 'train' ? <span className="font-bold">🚂</span> : <span className="font-bold">🚌</span>} Transport
+                    </h3>
+                    <p className="text-sm font-bold text-slate-900 leading-tight">{tripState.transport.details}</p>
+                    <p className="text-xs font-semibold text-slate-500 mt-1">Avg. {tripState.transport.avgPrice}</p>
+                  </div>
+                )}
+                {tripState.accommodation && (
+                  <div className="p-5 rounded-3xl bg-slate-50 border border-slate-200">
+                    <h3 className="flex items-center gap-2 text-[10px] font-black text-rose-500 uppercase tracking-widest mb-2">
+                       <Building size={14} /> Suggested Stay
+                    </h3>
+                    <p className="text-sm font-bold text-slate-900 leading-tight">{tripState.accommodation.hotelName}</p>
+                    <p className="text-xs font-semibold text-slate-500 mt-1">{tripState.accommodation.price} per night</p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {tripState.preferences && Array.isArray(tripState.preferences) && tripState.preferences.length > 0 && (
                <div className="p-5 rounded-3xl bg-slate-50/50 border border-slate-100 mt-4">
@@ -266,7 +289,7 @@ export function PlannerContainer({ groupId, initialTripState, initialNotes = [],
                 </div>
                 <div className="relative z-10">
                   <p className="font-black text-lg mb-1 flex items-center justify-center gap-2">
-                    <Sparkles size={18} /> AI Planner Active
+                    <Sparkles size={18} /> Saarthi Active
                   </p>
                   <p className="text-indigo-100 text-sm font-medium">Have a chat with the AI on the left to structure this itinerary.</p>
                 </div>
